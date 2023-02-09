@@ -1,3 +1,10 @@
+#############################################################
+###### Infinite Campus Selection Filter Populator ###########
+###### Created By: C. Eide, Tech Integrator       ###########
+###### Trumbull Public Schools, Trumbull, CT      ###########
+###### Direct Inquiries to: ceide@trumbullps.org  ###########
+#############################################################
+
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -5,9 +12,13 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome.options import Options
 import csv
 
+# GLOBAL CONSTANTS (CONFIG)
+DISTRICTICLOGINURL = "https://trumbullct.infinitecampus.org/campus/trumbull.jsp" # URL for District's IC Login Page
+DEFAULTCOLUMNNAME = "student_studentNumber"
+
 # create the driver, navigate to IC, and wait for the user to get to the correct screen
 driver = webdriver.Chrome()
-driver.get("https://trumbullct.infinitecampus.org/campus/trumbull.jsp")
+driver.get(DISTRICTICLOGINURL)
 
 input("Press Enter To Select Values")
 loop = True
@@ -22,8 +33,8 @@ while (loop):
         reader = csv.DictReader(csvfile)
 
         for row in reader:
-            print(row['student_studentNumber'])
-            studentstoselect.append(row['student_studentNumber'])
+            print(row[DEFAULTCOLUMNNAME])
+            studentstoselect.append(row[DEFAULTCOLUMNNAME])
 
     #shift view to iFrame and locate <select> element
     frame = driver.find_element(By.ID, "frameWorkspace")
