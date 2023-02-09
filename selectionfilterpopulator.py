@@ -46,3 +46,6 @@ while (loop):
     loopinput = input("Would you like to try again? (Y/N)")
     if (loopinput == 'N'):
         loop = False
+
+print("Script Execution Complete")
+driver.quit()
