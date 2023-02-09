@@ -21,9 +21,9 @@ while (loop):
     with open('C:/Users/ceide/Desktop/Python Scripts/SelectionFilterPopulator/input.csv', 'r') as csvfile:
         reader = csv.DictReader(csvfile)
 
-    for row in reader:
-        print(row['student_studentNumber'])
-        studentstoselect.append(row['student_studentNumber'])
+        for row in reader:
+            print(row['student_studentNumber'])
+            studentstoselect.append(row['student_studentNumber'])
 
     #shift view to iFrame and locate <select> element
     frame = driver.find_element(By.ID, "frameWorkspace")
