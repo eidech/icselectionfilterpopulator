@@ -18,10 +18,12 @@ DEFAULTCOLUMNNAME = "student_studentNumber"
 driver = webdriver.Chrome()
 driver.get(DISTRICTICLOGINURL)
 
-input("Press Enter To Select Values")
 loop = True
 
 while (loop):
+
+    # wait for user to be ready to populate
+    input("Press Enter To Select Values")
 
     # holder for student numbers from CSV file
     studentstoselect = []
