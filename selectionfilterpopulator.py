@@ -8,11 +8,13 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
-import csv
+import csv, os
 
 # GLOBAL CONSTANTS (CONFIG)
 DISTRICTICLOGINURL = "https://trumbullct.infinitecampus.org/campus/trumbull.jsp" # URL for District's IC Login Page
 DEFAULTCOLUMNNAME = "student_studentNumber"
+
+script_dir = os.path.dirname(__file__)
 
 # create the driver, navigate to IC, and wait for the user to get to the correct screen
 driver = webdriver.Chrome()
@@ -29,7 +31,7 @@ while (loop):
     studentstoselect = []
 
     # load up the CSV values
-    with open('C:/Users/ceide/Desktop/Python Scripts/SelectionFilterPopulator/input.csv', 'r') as csvfile:
+    with open(script_dir + "/input.csv", 'r') as csvfile:
         reader = csv.DictReader(csvfile)
 
         for row in reader:
