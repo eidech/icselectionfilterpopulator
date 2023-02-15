@@ -21,9 +21,23 @@ driver = webdriver.Chrome()
 driver.get(DISTRICTICLOGINURL)
 
 loop = True
-
 while (loop):
 
+     # prompt user for filename
+    valid = False
+    while not valid:
+        filename = input("Please type the filename you wish to use: ")
+        if not '.' in filename:
+            print("INVALID FILENAME! Please enter a filename with extension")
+            continue
+        if filename.rsplit('.', 1)[1] != 'csv':
+            print("INVALID INPUT! Please enter a CSV file")
+            continue
+        if not os.path.exists(script_dir + "/" + filename):
+            print("FILE NOT FOUND! Please try again")
+            continue
+        valid = True
+        
     # wait for user to be ready to populate
     input("Press Enter To Select Values")
 
@@ -38,23 +52,27 @@ while (loop):
             print(row[DEFAULTCOLUMNNAME])
             studentstoselect.append(row[DEFAULTCOLUMNNAME])
 
-    #shift view to iFrame and locate <select> element
-    frame = driver.find_element(By.ID, "frameWorkspace")
-    driver.switch_to.frame(frame)
-    studentListSelect = Select(driver.find_element(By.ID, "allListID"))
+    try:
+        #shift view to iFrame and locate <select> element
+        frame = driver.find_element(By.ID, "frameWorkspace")
+        driver.switch_to.frame(frame)
+        studentListSelect = Select(driver.find_element(By.ID, "allListID"))
 
-    # find the button used to move values to right
-    movebutton = driver.find_element(By.ID, "addSelection")
+        # find the button used to move values to right
+        movebutton = driver.find_element(By.ID, "addSelection")
 
-    # iterate through options and select ones in the list of students, then move them to the right
-    for option in studentListSelect.options:
+        # iterate through options and select ones in the list of students, then move them to the right
+        for option in studentListSelect.options:
 
-        optionStudentNumber = option.text.split('#',1)[1]
-        print("Option Student Number: " + optionStudentNumber)
+            optionStudentNumber = option.text.split('#',1)[1]
+            print("Option Student Number: " + optionStudentNumber)
 
-        if(optionStudentNumber in studentstoselect):
-            option.click()
-            movebutton.click()
+            if(optionStudentNumber in studentstoselect):
+                option.click()
+                movebutton.click()
+    except:
+        print("ERROR: Please ensure you are at the proper screen!\n")
+        continue
 
     loopinput = input("Would you like to try again? (Y/N)")
     if (loopinput == 'N'):
