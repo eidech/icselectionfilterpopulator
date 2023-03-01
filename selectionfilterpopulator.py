@@ -54,6 +54,7 @@ while (loop):
 
     try:
         #shift view to iFrame and locate <select> element
+        driver.switch_to.default_content()
         frame = driver.find_element(By.ID, "frameWorkspace")
         driver.switch_to.frame(frame)
         studentListSelect = Select(driver.find_element(By.ID, "allListID"))
