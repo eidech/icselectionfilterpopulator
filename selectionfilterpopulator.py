@@ -37,6 +37,10 @@ while (loop):
             print("FILE NOT FOUND! Please try again")
             continue
         valid = True
+    
+    columnname = input("Please type the column name containing student numbers (Press Enter for IC Default): ")
+    if columnname == "":
+        columnname = DEFAULTCOLUMNNAME
         
     # wait for user to be ready to populate
     input("Press Enter To Select Values")
@@ -45,12 +49,16 @@ while (loop):
     studentstoselect = []
 
     # load up the CSV values
-    with open(script_dir + "/input.csv", 'r') as csvfile:
-        reader = csv.DictReader(csvfile)
+    try:
+        with open(script_dir + '/' + filename, 'r') as csvfile:
+            reader = csv.DictReader(csvfile)
 
-        for row in reader:
-            print(row[DEFAULTCOLUMNNAME])
-            studentstoselect.append(row[DEFAULTCOLUMNNAME])
+            for row in reader:
+                print(row[columnname])
+                studentstoselect.append(row[columnname])
+    except:
+        print("ERROR: Could not open file.  Please check filename and ensure it's in the proper location.\n")
+        continue
 
     try:
         #shift view to iFrame and locate <select> element
@@ -74,7 +82,7 @@ while (loop):
     except:
         print("ERROR: Please ensure you are at the proper screen!\n")
         continue
-
+    
     loopinput = input("Would you like to try again? (Y/N)")
     if (loopinput == 'N'):
         loop = False
